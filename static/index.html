@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>NoTermux</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     VISTA: LOGIN
+═══════════════════════════════════════════════════════════════════ -->
+<div id="view-login" class="view">
+  <div class="login-card">
+    <h1>NoTermux</h1>
+    <p class="login-sub">¿Cómo te llamas?</p>
+    <input id="username-input" type="text" placeholder="Tu nombre" autocomplete="name"
+           autocorrect="off" autocapitalize="words" />
+    <button class="btn-primary" id="login-btn">Entrar</button>
+  </div>
+  <div class="login-footer">
+    <span class="login-by">by uzii1201</span>
+    <a class="github-link" href="https://github.com/uzii1201" target="_blank" rel="noopener">
+      GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     VISTA: SESIONES
+═══════════════════════════════════════════════════════════════════ -->
+<div id="view-sessions" class="view hidden">
+  <header class="app-header">
+    <span class="header-title">NoTermux</span>
+    <span class="user-badge" id="user-display"></span>
+    <button class="btn-icon-sm" id="refresh-btn" title="Actualizar lista">↻</button>
+    <button class="btn-ghost" id="logout-btn">Salir</button>
+  </header>
+
+  <div class="sessions-body">
+
+    <!-- Crear sesión -->
+    <section class="card-section">
+      <div class="section-label">Nueva sesión</div>
+      <div class="create-box">
+        <div class="input-row">
+          <input id="session-name-input" type="text" placeholder="Nombre de sesión"
+                 autocorrect="off" autocapitalize="none" spellcheck="false" />
+          <button class="btn-icon-sm" id="generate-name-btn" title="Generar nombre">↺</button>
+        </div>
+        <button class="btn-primary" id="create-session-btn">Crear sesión</button>
+      </div>
+    </section>
+
+    <!-- Unirse -->
+    <section class="card-section">
+      <div class="section-label">Unirse a sesión existente</div>
+      <div class="input-row">
+        <input id="join-name-input" type="text" placeholder="Nombre exacto de la sesión"
+               autocorrect="off" autocapitalize="none" spellcheck="false" />
+        <button class="btn-secondary" id="join-btn">Unirse</button>
+      </div>
+    </section>
+
+    <!-- Lista de sesiones -->
+    <section class="card-section">
+      <div class="section-label" id="sessions-section-label">Sesiones</div>
+      <div id="sessions-list"></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     VISTA: WORKSPACE
+═══════════════════════════════════════════════════════════════════ -->
+<div id="view-workspace" class="view hidden">
+  <header class="app-header">
+    <button class="btn-icon-sm" id="back-btn" title="Volver">←</button>
+    <span class="header-title session-name-display" id="session-display"></span>
+    <span class="user-badge" id="workspace-user"></span>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="notes">Notas</button>
+    <button class="tab" data-tab="todos">To-Do</button>
+  </div>
+
+  <!-- Pestaña Notas -->
+  <div id="tab-notes" class="tab-content">
+    <button class="btn-primary" id="new-note-btn">+ Nueva nota</button>
+    <div id="notes-list"></div>
+  </div>
+
+  <!-- Pestaña Todos -->
+  <div id="tab-todos" class="tab-content hidden">
+    <div class="input-row">
+      <input id="new-todo-input" type="text" placeholder="Nueva tarea..." />
+      <button class="btn-secondary" id="add-todo-btn">Agregar</button>
+    </div>
+    <div id="todos-list"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     MODAL: EDITOR DE NOTA
+═══════════════════════════════════════════════════════════════════ -->
+<div id="modal-note" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-note-title">Nueva nota</span>
+      <button class="btn-icon-sm" id="cancel-note-btn" title="Cerrar">✕</button>
+    </div>
+    <input id="note-title" type="text" placeholder="Título de la nota" />
+    <div class="editor-toolbar" id="editor-toolbar">
+      <button type="button" onclick="fmt('bold')"          title="Negrita (Ctrl+B)"><b>B</b></button>
+      <button type="button" onclick="fmt('italic')"        title="Cursiva (Ctrl+I)"><i>I</i></button>
+      <button type="button" onclick="fmt('underline')"     title="Subrayado (Ctrl+U)"><u>U</u></button>
+      <button type="button" onclick="fmt('strikeThrough')" title="Tachado"><s>S</s></button>
+      <span class="toolbar-sep"></span>
+      <button type="button" onclick="fmt('insertUnorderedList')" title="Lista con viñetas">• —</button>
+      <button type="button" onclick="fmt('insertOrderedList')"   title="Lista numerada">1.</button>
+      <span class="toolbar-sep"></span>
+      <button type="button" onclick="fmt('removeFormat')" title="Quitar formato" class="btn-fmt-clear">Aa</button>
+    </div>
+    <div id="note-editor" contenteditable="true" spellcheck="true"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="delete-note-btn" style="display:none">Eliminar</button>
+      <button class="btn-primary"   id="save-note-btn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast de notificaciones -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

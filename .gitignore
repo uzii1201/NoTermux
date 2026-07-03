@@ -1,0 +1,16 @@
+# Datos de usuarios — no subir al repo
+data/sessions/*.json
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
