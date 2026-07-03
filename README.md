@@ -21,7 +21,7 @@ Sin base de datos, sin dependencias externas. Solo Python.
 
 ```bash
 pkg update && pkg install python git
-git clone https://github.com/tu-usuario/notas-app.git
+git clone https://github.com/uzii1201/NoTermux.git
 cd notas-app
 python server.py
 ```
